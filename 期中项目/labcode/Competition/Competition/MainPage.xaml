@@ -1,0 +1,178 @@
+﻿<Page
+    x:Class="Competition.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Competition"
+    xmlns:md="using:Competition.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Background>
+        <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="WhiteSmoke" TintOpacity="0.7"/>
+    </Page.Background>
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0"/>
+                </VisualStateGroup.Transitions>
+
+                <VisualState>
+                    <VisualState.Setters>
+                        <Setter Target="menuView.DisplayMode" Value="Overlay" />
+                        <Setter Target="menuView.IsPaneOpen" Value="false"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.Setters>
+                        <Setter Target="menuView.DisplayMode" Value="CompactOverlay" />
+                        <Setter Target="menuView.IsPaneOpen" Value="false"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="550" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.Setters>
+                        <Setter Target="menuView.DisplayMode" Value="CompactInline"/>
+                        <Setter Target="menuView.IsPaneOpen" Value="true"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Style="{StaticResource TopBar}" VerticalAlignment="Center">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.5"/>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="58"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+                <!-- Menu -->
+                <AppBarButton
+                    x:Name="NavigationButton"
+                    Icon="GlobalNavigationButton"
+                    Grid.Column="0"
+                    Click="Menu_Click" 
+                    Width="58"
+                    RelativePanel.AlignLeftWithPanel="true"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Background="Transparent"
+                    Foreground="#409eff"
+                    Margin="0 -5 0 0">
+                </AppBarButton>
+                <Rectangle Grid.Column="1"/>
+                <TextBlock x:Name="realTitleBar" Grid.Column="1" Text="赛事系统" Margin="130 0 0 0" TextAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource Header}" VerticalAlignment="Center"/>
+                <AppBarButton x:Name="LogInLogOut" x:FieldModifier="public" BorderBrush="#409eff" Width="25" Icon="Contact" Grid.Column="2" Foreground="#20acff" Margin="0 -5 0 0">
+                    <AppBarButton.Flyout>
+                        <Flyout x:Name="UserInfoState" x:FieldModifier="public">
+                            <StackPanel Opacity="0.8" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <!--登陆-->
+                                <Button x:Name="Login_Button" Content="登陆" Width="100">
+                                    <Button.Flyout>
+                                        <Flyout x:Name="Login_Flyout" x:FieldModifier="public" Placement="4" FlyoutPresenterStyle="{StaticResource LoginFlyout}">
+                                            <Grid Height="200" Width="298" HorizontalAlignment="Center">
+                                                <Grid.Background>
+                                                    <AcrylicBrush BackgroundSource="HostBackdrop" TintOpacity="1"/>
+                                                </Grid.Background>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="20"/>
+                                                    <RowDefinition Height="50"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Text="登陆" HorizontalAlignment="Center" FontSize="20"/>
+                                                <TextBox x:Name="UserName" Grid.Row="1" Width="240" PlaceholderText="请输入用户名" AllowFocusOnInteraction="True" VerticalAlignment="Center"/>
+                                                <PasswordBox x:Name="Password" Grid.Row="2" Width="240" PlaceholderText="请输入密码" AllowFocusOnInteraction="True" VerticalAlignment="Center"/>
+                                                <TextBlock x:Name="errorMessage" Grid.Row="3" TextAlignment="Center" TextDecorations="Underline" Foreground="Red"/>
+                                                <Button x:Name="Login" Grid.Row="4" Margin="30,0,0,0" Content="登陆" Click="Login_Clicked" AllowFocusOnInteraction="True" Width="80" HorizontalAlignment="Left"/>
+                                                <!--注册-->
+                                                <Button x:Name="Regist" Grid.Row="4" Margin="0,0,30,0" Content="注册" Width="80" HorizontalAlignment="Right" Click="Regist_Click"/>
+                                            </Grid>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                                <!--退出-->
+                                <Button x:Name="Exit_Button" Content="退出" Width="100" Click="Exit_Clicked"/>
+                            </StackPanel>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+            </Grid>
+            <SplitView Grid.Row="1" x:Name="menuView" CompactPaneLength="58" OpenPaneLength="170">
+                <SplitView.Pane>
+                    <Grid Style="{StaticResource LeftBar}">
+                        <Grid.Background>
+                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.5"/>
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+
+                            <!-- 一级菜单 -->
+                            <ListView x:Name="NavMenuPrimaryListView" 
+                                        SelectionMode="None" IsItemClickEnabled="True" 
+                                        ItemTemplate="{StaticResource MenuItemDataTemplate}" 
+                                        ItemsSource="{x:Bind navMenuItemVM.NavMenuPrimaryItem}"
+                                        ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
+                                        ItemClick="ListView_PrimaryItemClick"/>
+
+                            <!-- 二级菜单 -->
+                            <ListView x:Name="NavMenuMatchListView" 
+                                        Visibility="Collapsed"
+                                        SelectionMode="None" IsItemClickEnabled="True" 
+                                        ItemTemplate="{StaticResource MenuItemDataTemplate}"   
+                                        ItemsSource="{x:Bind navMenuItemVM.NavMenuMatchItem}"
+                                        ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
+                                        ItemClick="ListView_PrimaryItemClick" x:FieldModifier="Public" />
+
+                            <!-- 三级菜单 -->
+                            <ListView Name="NavMenuMatchInfoListView"
+                                        Margin="10 0 0 0"
+                                        Visibility="Collapsed"
+                                        SelectionMode="None" IsItemClickEnabled="True" 
+                                        ItemTemplate="{StaticResource MenuItemDataTemplate}" 
+                                        ItemsSource="{x:Bind navMenuItemVM.NavMenuMatchInfoItem}"
+                                        ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"    
+                                        ItemClick="ListView_SecondaryItemClick" x:FieldModifier="Public" />
+                        </StackPanel>
+
+                        <!--底部菜单-->
+                        <ListView x:Name="NavMenuBottomListView" 
+                                    Grid.Row="1"
+                                    SelectionMode="None" IsItemClickEnabled="True" 
+                                    ItemTemplate="{StaticResource MenuItemDataTemplate}" 
+                                    ItemsSource="{x:Bind navMenuItemVM.NavMenuBottomItem}"
+                                    ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}" 
+                                    BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" BorderThickness="0,1,0,0" 
+                                    ItemClick="ListView_PrimaryItemClick"/>
+                    </Grid>
+                </SplitView.Pane>
+                <Border>
+                    <ScrollViewer>
+                        <Frame x:Name="ContentFrame" x:FieldModifier="Public"/>
+                    </ScrollViewer>
+                </Border>
+            </SplitView>
+        </Grid>
+    </Grid>
+</Page>

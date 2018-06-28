@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="Competition.Views.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Competition.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="using:Competition.Models"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Flyout x:Key="ShareFlyout" Placement="Bottom">
+            <Button Content="分享" Style="{StaticResource ButtonStyle}" Click="Button_Click" Width="100"/>
+        </Flyout>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="Info" Grid.Row="0" Text="" VerticalAlignment="Center" TextAlignment="Center" TextDecorations="Underline" FontSize="25"/>
+        <GridView x:Name="listView" Grid.Row="1" HorizontalAlignment="Center" IsItemClickEnabled="True" ItemClick="listView_ItemClick"  ItemsSource="{x:Bind matchesVM.AllMatches}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="md:Matches">
+                    <StackPanel Padding="20 0 20 0" Width="200" Height="200" FlyoutBase.AttachedFlyout="{StaticResource ShareFlyout}" RightTapped="StackPanel_RightTapped">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="../Assets/matchbackground.jpg" Opacity="0.9"/>
+                        </StackPanel.Background>
+                        <TextBlock Text="{x:Bind name}" Style="{StaticResource Header}" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                        <TextBlock x:Name="MatchEvent" Text="赛事类型：" FontSize="17" FontWeight="Bold" Margin="0 20 0 0" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{x:Bind matchEvent}" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="MatchStartTime" Text="开始时间：" FontSize="17" FontWeight="Bold" Margin="0 20 0 0" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{x:Bind startTime}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</Page>
